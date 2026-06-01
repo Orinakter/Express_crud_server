@@ -41,6 +41,36 @@ app.post("/api/users", async (req: Request, res: Response) => {
 
 // get all users
 
+app.get("/api/users",async(req:Request,res:Response)=>{
+    const result = await pool.query(`
+        SELECT * FROM users
+        `)
+        console.log(result);
+        res.status(200).json({
+    success: true,
+    message: " all user created successfully!",
+    data: result.rows,
+  });
+
+})
+
+// single data
+
+app.get("/api/users/:id",async(req: Request, res: Response)=>{
+    const id = req.params.id;
+    const result = await pool.query(`
+        SELECT * FROM users
+        WHERE id = $1
+        `,[id])
+
+        res.status(201).json({
+            success : true,
+            message : "single user created successfully",
+            data: result.rows[0]
+
+        })
+})
+
 
 app.listen(port, () => {
     initDb()
