@@ -4,6 +4,7 @@ import express, {
   type Response,
 } from "express";
 import { initDb, pool } from "./db/db.init";
+import { Result } from "pg";
 
 const app: Application = express();
 const port = 5000;
@@ -107,6 +108,38 @@ app.patch("/api/updateUsers/:id", async (req: Request, res: Response) => {
     data: result.rows[0],
   });
 });
+
+// delete user
+
+app.use("/api/deleteUser.:id",async(req: Request, res: Response)=>{
+    const {id}= req.params;
+    try{
+        const result = await pool.query(`
+            DELETE FROM users 
+            where id =$1
+            `,[id])
+
+            res.status(200).json({
+            success: true,
+            message: "User delete successfully",
+            data:result.rows[0]
+        })
+
+    }catch(error){
+        console.log(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error",
+
+        })
+
+
+        
+
+    }
+
+})
 
 
 
