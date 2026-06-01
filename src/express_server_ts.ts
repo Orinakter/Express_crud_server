@@ -3,6 +3,9 @@ import express, { type Application, type Request, type Response } from "express"
 const app:Application = express();
 const port = 5000;
 
+//   middleware
+app.use(express.json());
+
 // root route
 
 app.get ("/",(req:Request,res:Response)=>{
@@ -10,6 +13,8 @@ app.get ("/",(req:Request,res:Response)=>{
     success: true,
     message: "This is root route"
 });
+
+
 
 })
 
