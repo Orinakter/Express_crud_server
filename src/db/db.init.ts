@@ -20,8 +20,11 @@ export const pool = new Pool({
             )
             `)
 
+            console.log("Neondb connected successfully");
+
     }catch (error){
         console.log(error);
     }
+
 
 }
